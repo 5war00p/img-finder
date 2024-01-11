@@ -19,7 +19,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-[url('/home-bg.png')] bg-no-repeat bg-cover">
+      <body className="bg-[url('/bgs/home-bg.png')] bg-no-repeat bg-cover">
         {children}
       </body>
     </html>

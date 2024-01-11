@@ -1,42 +1,38 @@
+import { Image } from "@/utils/getImages";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import NextImage from "next/image";
 
-const tags = [
-  "Digital",
-  "Computer",
-  "Codierung",
-  "Tech",
-  "Netz",
-  "Code",
-  "Finanzeiren",
-  "Marketing",
-];
-
-const sizes = [
-  {
-    name: "Small",
-    size: "640x960",
-  },
-  {
-    name: "Medium",
-    size: "1920x2660",
-  },
-  {
-    name: "Big",
-    size: "2400x3600",
-  },
-  {
-    name: "Original",
-    size: "3850x5640",
-  },
-];
 export default function ImagePreviewModal({
   isOpen,
+  image,
   onClose,
 }: {
   isOpen: boolean;
+  image?: Image;
   onClose: () => void;
 }) {
+  if (!image?.largeImageURL) return null;
+
+  const sizes = [
+    {
+      name: "Preview",
+      size: `${image.previewWidth}x${image.previewHeight}`,
+    },
+    {
+      name: "WebFormat",
+      size: `${image.webformatWidth}x${image.webformatHeight}`,
+    },
+    {
+      name: "Large",
+      size: "1920x1280",
+    },
+    {
+      name: "Original",
+      size: `${image.imageWidth}x${image.imageHeight}`,
+    },
+  ];
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -68,7 +64,7 @@ export default function ImagePreviewModal({
                   as="h3"
                   className="flex p-6 pb-4 justify-between text-xl font-medium leading-6 text-[#3B4043]"
                 >
-                  Preview ID: 48777
+                  Preview ID: {image.id}
                   <button onClick={onClose} className="focus:outline-none">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -80,9 +76,9 @@ export default function ImagePreviewModal({
                       <path
                         d="M11.8451 20.3409L20.2303 11.9557M20.2303 20.3409L11.8451 11.9557M11.5933 30.9631H20.4822C27.8896 30.9631 30.8525 28.0002 30.8525 20.5928V11.7039C30.8525 4.29646 27.8896 1.3335 20.4822 1.3335H11.5933C4.18586 1.3335 1.2229 4.29646 1.2229 11.7039V20.5928C1.2229 28.0002 4.18586 30.9631 11.5933 30.9631Z"
                         stroke="#3B4043"
-                        stroke-width="2.22138"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2.22138"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                   </button>
@@ -90,9 +86,10 @@ export default function ImagePreviewModal({
                 <div className="bg-white p-6">
                   <div className="grid grid-cols-4 space-x-10">
                     <div className="col-span-3">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80"
+                      <NextImage
+                        width={image.imageWidth}
+                        height={image.imageHeight}
+                        src={image.largeImageURL}
                         alt="image"
                         className="w-full h-[550px] rounded-lg object-cover pointer-events-none group-hover:opacity-75"
                       />
@@ -106,7 +103,11 @@ export default function ImagePreviewModal({
                               {sizes.map((size, sizeIdx) => (
                                 <tr
                                   key={sizeIdx}
-                                  className="relative flex items-start p-4"
+                                  className={`relative flex items-start p-4 hover:bg-[#f4fff4] ${
+                                    sizeIdx === sizes.length - 1
+                                      ? "bg-slate-100 cursor-not-allowed"
+                                      : ""
+                                  }`}
                                 >
                                   <td className="min-w-0 flex-1 text-sm leading-6">
                                     <label
@@ -129,6 +130,7 @@ export default function ImagePreviewModal({
                                       id={`side-${sizeIdx}`}
                                       name="plan"
                                       type="radio"
+                                      disabled={sizeIdx === sizes.length - 1}
                                       defaultChecked={sizeIdx === 0}
                                       className="h-4 w-4 border-gray-300 text-[#4BC34B] focus:ring-0"
                                     />
@@ -149,8 +151,8 @@ export default function ImagePreviewModal({
                             <span className="text-[#717579] text-xs font-semibold">
                               User
                             </span>
-                            <span className="text-[#3B4043] capitalize font-semibold">
-                              Josch13
+                            <span className="truncate text-[#3B4043] capitalize font-semibold">
+                              {image.user}
                             </span>
                           </div>
                           <div className="flex flex-col">
@@ -158,7 +160,7 @@ export default function ImagePreviewModal({
                               UserID
                             </span>
                             <span className="text-[#3B4043] capitalize font-semibold">
-                              48777
+                              {image.user_id}
                             </span>
                           </div>
                           <div className="flex flex-col">
@@ -174,7 +176,7 @@ export default function ImagePreviewModal({
                               Views
                             </span>
                             <span className="text-[#3B4043] capitalize font-semibold">
-                              200,000
+                              {image.views}
                             </span>
                           </div>
                           <div className="flex flex-col">
@@ -182,7 +184,7 @@ export default function ImagePreviewModal({
                               Downloads
                             </span>
                             <span className="text-[#3B4043] capitalize font-semibold">
-                              6,439
+                              {image.downloads}
                             </span>
                           </div>
                           <div className="flex flex-col">
@@ -190,7 +192,7 @@ export default function ImagePreviewModal({
                               Likes
                             </span>
                             <span className="text-[#3B4043] capitalize font-semibold">
-                              564
+                              {image.likes}
                             </span>
                           </div>
                         </div>
@@ -200,10 +202,10 @@ export default function ImagePreviewModal({
                   <div className="flex items-center gap-4 mt-4">
                     <b className="text-sm">Tags:</b>
                     <div className="flex my-3 gap-2">
-                      {tags.map((tag, index) => (
+                      {image.tags.split(", ").map((tag, index) => (
                         <span
                           key={index}
-                          className="text-xs rounded-[1.776px] p-2 bg-[#F5F5F5] text-[#767676]"
+                          className="text-xs capitalize rounded-[1.776px] p-2 bg-[#F5F5F5] text-[#767676]"
                         >
                           {tag}
                         </span>
