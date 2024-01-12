@@ -15,7 +15,13 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {Array.from(Array(9)).map((img, imgIndex) => (
-          <link key={imgIndex} href="/bgs/0.jpg" rel="preload" as="image" />
+          <link
+            key={imgIndex}
+            href="/bgs/0.jpg"
+            rel="preload"
+            as="image"
+            type="image/jpg"
+          />
         ))}
       </head>
       <body>{children}</body>
