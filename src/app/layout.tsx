@@ -17,7 +17,7 @@ export default function RootLayout({
         {Array.from(Array(9)).map((img, imgIndex) => (
           <link
             key={imgIndex}
-            href="/bgs/0.jpg"
+            href={`/bgs/${imgIndex}.jpg`}
             rel="preload"
             as="image"
             type="image/jpg"
