@@ -14,14 +14,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
-          href="https://fonts.cdnfonts.com/css/euclid-circular-b"
-          rel="stylesheet"
-        />
+        {Array.from(Array(8)).map((img, imgIndex) => (
+          <link key={imgIndex} href="/bgs/0.jpg" rel="preload" as="image" />
+        ))}
       </head>
-      <body className="bg-[url('/bgs/home-bg.png')] bg-no-repeat bg-cover">
-        {children}
-      </body>
+      {/* className="bg-[url('/bgs/home-bg.png')] bg-no-repeat bg-cover" */}
+      <body>{children}</body>
     </html>
   );
 }
