@@ -14,11 +14,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {Array.from(Array(8)).map((img, imgIndex) => (
+        {Array.from(Array(9)).map((img, imgIndex) => (
           <link key={imgIndex} href="/bgs/0.jpg" rel="preload" as="image" />
         ))}
       </head>
-      {/* className="bg-[url('/bgs/home-bg.png')] bg-no-repeat bg-cover" */}
       <body>{children}</body>
     </html>
   );

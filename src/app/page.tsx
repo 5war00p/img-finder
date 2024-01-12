@@ -8,7 +8,7 @@ export default function Home() {
       <div className="fixed w-[100vw] h-[100vh] overflow-hidden z-[-1] top-0 left-0">
         <Image
           alt="travel"
-          src={`/bgs/${Math.floor(Math.random() * 8)}.jpg`}
+          src={`/bgs/${Math.floor(Math.random() * 9)}.jpg`}
           fetchPriority="high"
           fill
         />
