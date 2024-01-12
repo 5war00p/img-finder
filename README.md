@@ -1,6 +1,6 @@
 This is an assignment made for linebroker which uses Pixbay API to fetch images based on user query and have ability to download images.
 
-## Getting Started
+## Setup
 
 Install packages
 
