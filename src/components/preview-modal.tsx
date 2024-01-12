@@ -92,8 +92,8 @@ export default function ImagePreviewModal({
                   </button>
                 </Dialog.Title>
                 <div className="bg-white p-6">
-                  <div className="grid grid-cols-4 space-x-10">
-                    <div className="col-span-3">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 lg:space-x-10 items-start">
+                    <div className="col-span-2 lg:col-span-3">
                       <NextImage
                         width={image.imageWidth}
                         height={image.imageHeight}
@@ -102,7 +102,7 @@ export default function ImagePreviewModal({
                         className="w-full h-[550px] rounded-lg object-cover pointer-events-none group-hover:opacity-75"
                       />
                     </div>
-                    <div className="flex flex-col gap-6">
+                    <div className="flex lg:flex-col gap-16 lg:gap-6 mt-4 lg:mt-0">
                       <div className="space-y-4">
                         <h4 className="font-medium text-xl">Download</h4>
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
@@ -125,7 +125,7 @@ export default function ImagePreviewModal({
                                       {size.name}
                                     </label>
                                   </td>
-                                  <td className="min-w-0 flex-1 text-sm leading-6">
+                                  <td className="min-w-0 flex-1 text-sm leading-6 ml-6">
                                     <label
                                       htmlFor={`side-${sizeIdx}`}
                                       className="select-none font-bold text-gray-900"
@@ -133,7 +133,7 @@ export default function ImagePreviewModal({
                                       {size.size}
                                     </label>
                                   </td>
-                                  <td className="ml-3 flex h-6 items-center">
+                                  <td className="ml-6 flex h-6 items-center">
                                     <input
                                       id={`side-${sizeIdx}`}
                                       name="plan"
@@ -163,12 +163,12 @@ export default function ImagePreviewModal({
                       </div>
                       <div>
                         <h4 className="font-medium text-xl">Information</h4>
-                        <div className="grid grid-cols-2 my-4 gap-4 lg:grid-cols-3">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 my-4 gap-x-32 gap-y-8 lg:gap-4">
                           <div className="flex flex-col">
                             <span className="text-[#717579] text-xs font-semibold">
                               User
                             </span>
-                            <span className="truncate text-[#3B4043] capitalize font-semibold">
+                            <span className="lg:truncate text-[#3B4043] capitalize font-semibold">
                               {image.user}
                             </span>
                           </div>
