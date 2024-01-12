@@ -1,7 +1,8 @@
 import { Image } from "@/utils/getImages";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import NextImage from "next/image";
+import { downloadImage } from "@/utils/downloadImage";
 
 export default function ImagePreviewModal({
   isOpen,
@@ -12,20 +13,27 @@ export default function ImagePreviewModal({
   image?: Image;
   onClose: () => void;
 }) {
+  const [selectedSizeUrl, setSelectedSizeUrl] = useState(
+    image?.previewURL ?? ""
+  );
+
   if (!image?.largeImageURL) return null;
 
   const sizes = [
     {
       name: "Preview",
       size: `${image.previewWidth}x${image.previewHeight}`,
+      imageSrc: image.previewURL,
     },
     {
       name: "WebFormat",
       size: `${image.webformatWidth}x${image.webformatHeight}`,
+      imageSrc: image.webformatURL,
     },
     {
       name: "Large",
       size: "1920x1280",
+      imageSrc: image.largeImageURL,
     },
     {
       name: "Original",
@@ -133,6 +141,10 @@ export default function ImagePreviewModal({
                                       disabled={sizeIdx === sizes.length - 1}
                                       defaultChecked={sizeIdx === 0}
                                       className="h-4 w-4 border-gray-300 text-[#4BC34B] focus:ring-0"
+                                      onChange={(e) => {
+                                        if (e.target.checked && size.imageSrc)
+                                          setSelectedSizeUrl(size.imageSrc);
+                                      }}
                                     />
                                   </td>
                                 </tr>
@@ -140,7 +152,12 @@ export default function ImagePreviewModal({
                             </tbody>
                           </table>
                         </div>
-                        <button className="w-full py-2 text-xs bg-[#4BC34B] rounded-[4px] text-white">
+                        <button
+                          className="w-full py-2 text-xs bg-[#4BC34B] rounded-[4px] text-white"
+                          onClick={async () =>
+                            await downloadImage(selectedSizeUrl)
+                          }
+                        >
                           Download for free!
                         </button>
                       </div>

@@ -23,8 +23,10 @@ export function ResultsView() {
       getImages(q)
         .then((data) => {
           setImageData(data);
-          const tags = data.flatMap((image) => image.tags.split(", "));
-          setTags(() => [...Array.from(new Set(tags))]);
+          if (data.length) {
+            const tags = data.flatMap((image) => image.tags.split(", "));
+            setTags(() => [...Array.from(new Set(tags))]);
+          }
         })
         .catch((err) => console.error(err))
         .finally(() => {
@@ -67,7 +69,7 @@ export function ResultsView() {
         </div>
       ) : (
         <>
-          {imageData ? (
+          {imageData.length !== 0 ? (
             <div className="w-full bg-white">
               <div className="flex bg-[#F5F5F5] items-center gap-[10px] p-6  overflow-x-scroll">
                 {tags.map((tag, index) => (
